@@ -37,18 +37,24 @@ export default function PlaceInfo({ place, summary }) {
   const type = placeTypeLabel(place);
 
   return (
-    <div className="bg-slate-800 p-5 rounded-xl mb-4 border border-slate-700">
-      <h2 className="text-2xl font-bold text-white mb-2">{name}</h2>
-      {summary && (
-        <p className="text-slate-300 text-sm mb-3 leading-relaxed">{summary}</p>
-      )}
-      <div className="flex flex-wrap gap-x-6 gap-y-1 text-slate-300">
+    <div className="bg-slate-800/90 p-6 rounded-2xl mb-5 border border-slate-600/50 shadow-lg">
+      <h2 className="text-2xl md:text-3xl font-bold text-white mb-3">{name}</h2>
+      <div className="flex flex-wrap gap-x-4 gap-y-2 text-slate-300 text-sm mb-5 pb-4 border-b border-slate-600">
         <span>📍 {address}</span>
         <span>⭐ {rating} / 5</span>
         <span>💬 {reviewCount} مراجعة</span>
         <span>💰 {price}</span>
         <span>🏷️ {type}</span>
       </div>
+      {summary && (
+        <div className="bg-slate-700/50 rounded-xl p-4 border border-slate-600/50">
+          <h3 className="text-emerald-400 font-bold text-lg mb-2 flex items-center gap-2">
+            <span className="text-xl">📋</span>
+            ملخص عام عن المكان
+          </h3>
+          <p className="text-slate-200 leading-relaxed">{summary}</p>
+        </div>
+      )}
     </div>
   );
 }

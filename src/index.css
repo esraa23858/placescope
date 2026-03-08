@@ -2,3 +2,11 @@
 @tailwind components;
 @tailwind utilities;
 
+/* تصدير التقرير كـ PDF عبر طباعة المتصفح */
+@media print {
+  body { background: #0f172a; color: #e2e8f0; }
+  .no-print { display: none !important; }
+  #report-content { padding: 0; }
+  .bg-slate-800 { background: #1e293b; }
+}
+

@@ -1,7 +1,7 @@
-export default function Loading(){
-  return(
-  <div className="text-center text-xl mt-6">
-  ⏳ جاري التحليل بالذكاء الاصطناعي...
-  </div>
+export default function Loading({ text = "جاري التحليل بالذكاء الاصطناعي..." }) {
+  return (
+    <div className="text-center text-xl mt-6">
+      ⏳ {text}
+    </div>
   );
-  }
+}

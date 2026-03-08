@@ -16,7 +16,7 @@ import {
   Radar,
 } from "recharts";
 
-const SENTIMENT_COLORS = ["#22c55e", "#ef4444"];
+const SENTIMENT_COLORS = ["#22c55e", "#ef4444", "#94a3b8"];
 const BAR_COLOR = "#3b82f6";
 
 export default function ChartsSection({ charts }) {
@@ -30,30 +30,36 @@ export default function ChartsSection({ charts }) {
 
   const { stars = [], sentiment = [], categories = [] } = charts;
 
+  // التأكد من وجود كل النجوم 1-5 في Bar Chart (حتى القيم صفر تظهر)
+  const starsData = [1, 2, 3, 4, 5].map((n) => ({
+    name: `${n} نجوم`,
+    value: stars.find((s) => String(s.name) === String(n))?.value ?? 0,
+  }));
+
   return (
     <div className="bg-slate-800 p-5 rounded-xl mb-4 border border-slate-700">
-      <h2 className="text-xl font-bold text-white mb-4">📊 الرسومات البيانية</h2>
+      <h2 className="text-xl font-bold text-white mb-4">📊 الرسومات البيانية (Charts)</h2>
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {/* Bar: توزيع التقييمات حسب عدد النجوم (1-5) */}
+        {/* Bar Chart: توزيع التقييمات حسب عدد النجوم (1-5 نجوم) */}
         <div>
-          <h3 className="text-slate-300 text-sm mb-2">توزيع النجوم</h3>
+          <h3 className="text-slate-300 font-medium mb-2">Bar Chart: توزيع التقييمات حسب عدد النجوم (1-5 نجوم)</h3>
           <ResponsiveContainer width="100%" height={220}>
-            <BarChart data={stars} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
-              <XAxis dataKey="name" stroke="#94a3b8" fontSize={12} />
-              <YAxis stroke="#94a3b8" fontSize={12} />
+            <BarChart data={starsData} margin={{ top: 5, right: 5, left: 0, bottom: 5 }}>
+              <XAxis dataKey="name" stroke="#94a3b8" fontSize={11} interval={0} />
+              <YAxis stroke="#94a3b8" fontSize={12} allowDecimals={false} />
               <Tooltip
                 contentStyle={{ backgroundColor: "#1e293b", border: "1px solid #475569" }}
                 labelStyle={{ color: "#e2e8f0" }}
               />
-              <Bar dataKey="value" fill={BAR_COLOR} name="عدد المراجعات" radius={[4, 4, 0, 0]} />
+              <Bar dataKey="value" fill={BAR_COLOR} name="عدد المراجعات" radius={[4, 4, 0, 0]} minPointSize={2} />
             </BarChart>
           </ResponsiveContainer>
         </div>
 
-        {/* Pie: نسبة الإيجابي vs السلبي */}
+        {/* Pie Chart: نسبة الآراء الإيجابية مقابل السلبية */}
         <div>
-          <h3 className="text-slate-300 text-sm mb-2">نسبة الآراء الإيجابية والسلبية</h3>
+          <h3 className="text-slate-300 font-medium mb-2">Pie Chart: نسبة الآراء الإيجابية مقابل السلبية</h3>
           <ResponsiveContainer width="100%" height={220}>
             <PieChart>
               <Pie
@@ -77,9 +83,9 @@ export default function ChartsSection({ charts }) {
           </ResponsiveContainer>
         </div>
 
-        {/* Radar: تقييم الفئات */}
+        {/* Radar Chart: تقييم الفئات */}
         <div>
-          <h3 className="text-slate-300 text-sm mb-2">تقييم الفئات</h3>
+          <h3 className="text-slate-300 font-medium mb-2">Radar Chart: تقييم الفئات (جودة الطعام، الخدمة، الأجواء، القيمة مقابل السعر، النظافة، الموقع)</h3>
           {categories.length > 0 ? (
             <ResponsiveContainer width="100%" height={220}>
               <RadarChart data={categories} margin={{ top: 10, right: 10, bottom: 10, left: 10 }}>
